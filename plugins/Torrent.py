@@ -22,7 +22,7 @@ async def torrent(_, message):
     except:
         pass
     if len(message.command) < 2:
-        await message.reply_text("`/torrent <Movie Name>`")
+        await message.reply_text("/torrent <Movie Name>")
         return
     query = message.text.split(None, 1)[1].replace(" ", "%20")
     m = await message.reply_text("Searching\nThis might take a while")
@@ -35,9 +35,9 @@ async def torrent(_, message):
         await m.edit("Found Nothing.")
         return
     result = (
-        f"**Page - {i+1}**\n\n"
-        f"**🎬 Name :** {a[i]['name']}\n"
-        f"**🧲 Link :** `{a[i]['link']}`\n\n\n"
+        f"Page - {i+1}\n\n"
+        f"🎬 Name : {a[i]['name']}\n"
+        f"🧲 Link : {a[i]['link']}\n\n\n"
     )
     await m.edit(
         result,
@@ -63,9 +63,9 @@ async def callback_query_next(_, message):
     global query
     i += 1
     result = (
-        f"**Page - {i+1}**\n\n"
-        f"**🎬 Name :** {a[i]['name']}\n"
-        f"**🧲 Link :** `{a[i]['link']}`\n\n\n"
+        f"Page - {i+1}\n\n"
+        f"🎬 Name : {a[i]['name']}\n"
+        f"🧲 Link : {a[i]['link']}\n\n\n"
     )
     await m.edit(
         result,
@@ -94,23 +94,5 @@ async def callback_query_previous(_, message):
     global query
     i -= 1
     result = (
-        f"**Page - {i+1}**\n\n"
-        f"**🎬 Name:** {a[i]['name']}\n"
-        f"**🧲 Link:** `{a[i]['link']}`\n\n\n"
-    )
-    await m.edit(
-        result,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(f"⏪ Back",
-                                         callback_data="back_tor"),
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="close_data"),
-                    InlineKeyboardButton(f"Next ⏩",
-                                         callback_data="next_tor")
-                ]
-            ]
-        ),
-        parse_mode="markdown",
-  )
+        f"Page - {i+1}\n\n"
+        f
