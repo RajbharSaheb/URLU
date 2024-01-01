@@ -1,6 +1,5 @@
 import calendar
 import time 
-import date 
 import os 
 
 @Client.on_message(filters.command(["Calendar"]))
