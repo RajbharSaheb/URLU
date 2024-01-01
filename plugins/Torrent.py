@@ -45,7 +45,7 @@ def torrent_search(query):
     magnet_link = result.find("a", class_="magnet")["href"]
 
     # Convert the size from megabytes to gigabytes.
-    size = float(size[:-2]) / 1024
+    size = float(size[:-1]) / 1024
 
     # Create a dictionary containing the information about the torrent.
     torrent = {
