@@ -1,5 +1,9 @@
+import os
+import aiohttp
+import json
+from pyrogram import Client, filters, emoji
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 import requests
-import bs4
 
 @Client.on_message(filters.command(["torrent", "tor"]))
 def torrent_search(query):
