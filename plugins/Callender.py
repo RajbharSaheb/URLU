@@ -1,6 +1,7 @@
 import calendar
 import time 
 import os 
+from pyrogram import Client, filters, emoji
 
 @Client.on_message(filters.command(["Calendar"]))
 def print_calendar(year):
