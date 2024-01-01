@@ -8,8 +8,9 @@ requests
 tgcrypto
 yt-dlp
 olefile
-motor
-pymongo
+motor==2.5.1
+Shazamio
+pymongo[srv]==3.12.3
 dnspython
 psutil
 loggers
@@ -29,3 +30,6 @@ telegraph==1.4.1
 pyshorteners
 ytthumb
 spotdl
+psutil
+spotipy
+lyricsgenius
