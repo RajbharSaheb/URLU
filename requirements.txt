@@ -28,4 +28,4 @@ imdbpy
 telegraph==1.4.1
 pyshorteners
 ytthumb
-
+spotdl
