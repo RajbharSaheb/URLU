@@ -86,13 +86,38 @@ async def callback_query_next(_, message):
     )
 
 
+
 @Client.on_callback_query(filters.regex("back_tor"))
 async def callback_query_previous(_, message):
     global i
     global m
     global a
     global query
-    i -= 1
+
+    if i <= 0:
+        i = 0
+    else:
+        i -= 1
+
     result = (
         f"Page - {i+1}\n\n"
-        f
+        f"🎬 Name: {a[i]['name']}\n"
+        f"🧲 Link: {a[i]['link']}\n\n\n"
+    )
+
+    await m.edit(
+        result,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(f"⏪ Back",
+                                         callback_data="back_tor"),
+                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
+                                         callback_data="close_data"),
+                    InlineKeyboardButton(f"Next ⏩",
+                                         callback_data="next_tor")
+                ]
+            ]
+        ),
+        parse_mode="markdown",
+    )
