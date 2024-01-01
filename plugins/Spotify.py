@@ -6,7 +6,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import BadRequest, FloodWait
 from motor import motor_asyncio
-
+from pyrogram import Client as xbot
 
 # Configs
 API_HASH = os.environ['API_HASH'] # Your API HASH
