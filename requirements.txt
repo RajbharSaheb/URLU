@@ -33,3 +33,5 @@ spotdl
 psutil
 spotipy
 lyricsgenius
+apscheduler
+mutagen
