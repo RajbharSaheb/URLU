@@ -36,7 +36,7 @@ from pyrogram import Client
 #from mbot import OWNER_ID as ADMINS
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
-from mbot.utils.shazam import humanbytes, edit_or_reply, fetch_audio
+from functions.display_progress import humanbytes, edit_or_reply, fetch_audio
 NOT_SUPPORT = [ ]
 ADMINS = 1794941609
 def get_arg(message):
