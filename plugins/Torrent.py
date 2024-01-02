@@ -61,12 +61,12 @@ def torrent_search(query):
 
 # Keep asking the user for a search query until they enter something.
 
-while True:
-  query = input("Enter a search query: ")
-  if query:
-    break
-  else:
-    print("Please enter a valid search query.")
+#while True:
+  #query = input("Enter a search query: ")
+  #if query:
+   # break
+ # else:
+   # print("Please enter a valid search query.")
 
 # Search for torrents using the search query.
 torrents = torrent_search(query)
