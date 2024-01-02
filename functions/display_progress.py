@@ -16,7 +16,7 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InlineQueryResultArticle,
     InputTextMessageContent,
-    Message,
+    Message)
 from plugins.translation import Translation
 
 import mimetypes
