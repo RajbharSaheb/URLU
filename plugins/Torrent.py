@@ -34,12 +34,22 @@ async def torrent(_, message):
     except:
         await m.edit("Found Nothing.")
         return
+    
+try:
+    # Ensure that the 'a' variable is defined and contains the necessary data
+    if not a:
+        await m.edit("Found Nothing.")
+        return
+
     result = (
         f"Page - {i+1}\n\n"
         f"🎬 Name : {a[i]['name']}\n"
         f"🧲 Link : {a[i]['link']}\n\n\n"
     )
-    await m.edit(
+    await m.edit(result)
+except Exception as e:
+    print(f"An error occurred: {e}")
+    await m.edit("Something went wrong. Please try again.")(
         result,
         reply_markup=InlineKeyboardMarkup(
             [
