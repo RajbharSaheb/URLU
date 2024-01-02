@@ -2,6 +2,7 @@
 import requests
 import bs4
 from pyrogram import Client, filters, emoji
+
 @Client.on_message(filters.command(["torrent", "tor"]))
 def torrent_search(query):
   """
@@ -58,8 +59,11 @@ def torrent_search(query):
   # Return the list of torrents.
   return torrents
 
-# Get the search query from the user.
-query = input("Enter a search query: ")
+# Keep asking the user for a search query until they enter something.
+while True:
+  query = input("Enter a search query: ")
+  if query:
+    break
 
 # Search for torrents using the search query.
 torrents = torrent_search(query)
