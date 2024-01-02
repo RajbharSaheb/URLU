@@ -1,10 +1,7 @@
-import os
-import aiohttp
-import json
-from pyrogram import Client, filters, emoji
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
 import requests
 import bs4
+from pyrogram import Client
 
 @Client.on_message(filters.command(["torrent", "tor"]))
 def torrent_search(query):
@@ -45,7 +42,7 @@ def torrent_search(query):
     magnet_link = result.find("a", class_="magnet")["href"]
 
     # Convert the size from megabytes to gigabytes.
-    size = float(size[:-1]) / 1024
+    size = float(size[:-2]) / 1024
 
     # Create a dictionary containing the information about the torrent.
     torrent = {
@@ -62,19 +59,17 @@ def torrent_search(query):
   # Return the list of torrents.
   return torrents
 
+# Get the search query from the user.
+query = input("Enter a search query: ")
 
-if __name__ == "__main__":
-  # Get the search query from the user.
-  query = input("Enter a search query: ")
+# Search for torrents using the search query.
+torrents = torrent_search(query)
 
-  # Search for torrents using the search query.
-  torrents = torrent_search(query)
-
-  # Print the information about each torrent.
-  for torrent in torrents:
-    print("Name:", torrent["name"])
-    print("Size:", torrent["size"], "GB")
-    print("Seeds:", torrent["seeds"])
-    print("Leeches:", torrent["leeches"])
-    print("Magnet link:", torrent["magnet_link"])
-    print()
+# Print the information about each torrent.
+for torrent in torrents:
+  print("Name:", torrent["name"])
+  print("Size:", torrent["size"], "GB")
+  print("Seeds:", torrent["seeds"])
+  print("Leeches:", torrent["leeches"])
+  print("Magnet link:", torrent["magnet_link"])
+  print()
