@@ -54,7 +54,9 @@ async def twitter_handler(Mbot, message):
        await m.delete()
        await message.reply("Check out @urlx_bot(music)  @omg_info(Channel) \n Please Support Us By /donate To Maintain This Project")               
                  
- @Mbot.on_message(filters.regex(r'https?://.*facebook[^\s]+') & filters.incoming,group=-6)
+      @from pyrogram import filters, Client as Mbot
+
+@Mbot.on_message(filters.regex(r'https?://.*facebook[^\s]+') & filters.incoming,group=-6)
 async def link_handler(Mbot, message):
     link = message.matches[0].group(0)
     try:
@@ -65,19 +67,19 @@ async def link_handler(Mbot, message):
        if get_api['success'] == "ok":
           if get_api.get('result').get('hd'):
              try:
-                 dump_file = await message.reply_video(get_api['result']['hd'],caption="Thank you for using - @urlx_bot")
+                 dump_file = await message.reply_video(get_api['result']['hd'],caption="Thank you for using - @InstaReelsdownbot")
              except KeyError:
                  pass 
              except Exception:
                  try:
                      sndmsg = await message.reply(get_api['result']['hd'])
                      await asyncio.sleep(1)
-                     dump_file = await message.reply_video(get_api['result']['hd'],caption="Thank you for using - @urlx_bot")
+                     dump_file = await message.reply_video(get_api['result']['hd'],caption="Thank you for using - @InstaReelsdownbot")
                      await sndmsg.delete()
                  except Exception:
                      try:
                         down_file = wget.download(get_api['result']['hd'])
-                        await message.reply_video(down_file,caption="Thank you for using - @urlx_bot")
+                        await message.reply_video(down_file,caption="Thank you for using - @InstaReelsdownbot")
                         await sndmsg.delete()
                         os.remove(down_file)
                      except:
@@ -85,19 +87,19 @@ async def link_handler(Mbot, message):
           else: 
              if get_api.get('result').get('sd'):
                try:
-                   dump_file = await message.reply_video(get_api['result']['sd'],caption="Thank you for using - @urlx_bot")
+                   dump_file = await message.reply_video(get_api['result']['sd'],caption="Thank you for using - @InstaReelsdownbot")
                except KeyError:
                    pass
                except Exception:
                    try:
                        sndmsg = await message.reply(get_api['result']['sd'])
                        await asyncio.sleep(1)
-                       dump_file = await message.reply_video(get_api['result']['sd'],caption="Thank you for using - @urlx_bot")
+                       dump_file = await message.reply_video(get_api['result']['sd'],caption="Thank you for using - @InstaReelsdownbot")
                        await sndmsg.delete()
                    except Exception:
                       try:
                         down_file = wget.download(get_api['result']['sd'])
-                        await message.reply_video(down_file,caption="Thank you for using - @urlx_bot")
+                        await message.reply_video(down_file,caption="Thank you for using - @InstaReelsdownbot")
                         await sndmsg.delete()
                         os.remove(down_file)
                       except:
@@ -110,4 +112,4 @@ async def link_handler(Mbot, message):
           if 'dump_file' in locals():
             if DUMP_GROUP:
                await dump_file.copy(DUMP_GROUP)
-          await m.delete()      
+          await m.delete()     
