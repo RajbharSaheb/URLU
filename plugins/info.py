@@ -12,7 +12,7 @@ def is_enabled(value, default):
 
 
 
-
+GENIUS_API = "RWmW7Y915_oCss4BglqUA6pU2B767XP6iBHdWsH4bGCHke1VbuZw1_BEdamn4kEC" # get it from https://genius.com/developers
 LOG_GROUP = "-1001306080448" # Group ID for the log channel or leave it empty if not required 
 BUG = "-1001306080448" #add your group id for getting error log messages or leave it empty if not required 
 
