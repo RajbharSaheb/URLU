@@ -1,7 +1,7 @@
 from pyrogram import filters, Client as Mbot
 import bs4, requests,re,asyncio
 import wget,os,traceback
-from mbot import BUG as LOG_GROUP, LOG_GROUP as DUMP_GROUP
+from plugins.info import LOG_GROUP as DUMP_GROUP,BUG as LOG_GROUP
 
 @Mbot.on_message(filters.regex(r'https?://.*facebook[^\s]+') & filters.incoming,group=-6)
 async def link_handler(Mbot, message):
