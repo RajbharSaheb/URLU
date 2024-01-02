@@ -54,5 +54,4 @@ async def twitter_handler(Mbot, message):
        await m.delete()
        await message.reply("Check out @urlx_bot(music)  @omg_info(Channel) \n Please Support Us By /donate To Maintain This Project")               
                  
-      @from pyrogram import filters, Client as Mbot
-
+      
