@@ -10,7 +10,7 @@ API = "https://apis.xditya.me/lyrics?song="
 
 @Client.on_message(filters.text & filters.command(["genius"]) & filters.private)
 async def sng(bot, message):  
-          genius = Genius(genius_api)        
+          genius = Genius(GENIUS_API)        
           mee = await message.reply_text("`Searching`")
           try:
               song = message.text.split(None, 1)[1] #.lower().strip().replace(" ", "%20")
