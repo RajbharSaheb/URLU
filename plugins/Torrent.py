@@ -1,8 +1,7 @@
 
 import requests
 import bs4
-from pyrogram import Client
-
+from pyrogram import Client, filters, emoji
 @Client.on_message(filters.command(["torrent", "tor"]))
 def torrent_search(query):
   """
