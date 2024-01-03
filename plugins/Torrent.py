@@ -34,11 +34,11 @@ async def torrent(_, message):
     except:
         await m.edit("Found Nothing.")
         return
-    result = (
-        f"Page - {i+1}\n\n"
-        f"🎬 Name : {a['results'][i]['name']}\n"
-        f"🧲 Link : {a['results'][i]['link']}\n\n\n"
-    )
+result = (
+    f"Page - {i+1}\n\n"
+    f"🎬 Name : {a.get('results')[i]['name']}\n"
+    f"🧲 Link : {a.get('results')[i]['link']}\n\n\n"
+)
     await m.edit(
         result,
         reply_markup=InlineKeyboardMarkup(
@@ -61,11 +61,12 @@ async def callback_query_next(_, message):
     global m
     global a
     global query
-    i += 1
-    result = (
-        f"Page - {i+1}\n\n"
-        f"🎬 Name : {a['results'][i]['name']}\n"
-        f"🧲 Link : {a['results'][i]['link']}\n\n\n"
+        i += 1
+        
+result = (
+    f"Page - {i+1}\n\n"
+    f"🎬 Name : {a.get('results')[i]['name']}\n"
+    f"🧲 Link : {a.get('results')[i]['link']}\n\n\n"
     )
     await m.edit(
         result,
