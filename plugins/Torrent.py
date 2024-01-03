@@ -10,6 +10,7 @@ i = 0
 a = None
 query = None
 
+
 @Client.on_message(filters.command(["torrent", "tor"]))
 async def torrent(_, message):
     global m
@@ -112,4 +113,4 @@ async def callback_query_previous(_, message):
             ]
         ),
         parse_mode="markdown",
-    )
+  )
