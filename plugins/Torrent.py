@@ -1,4 +1,3 @@
-
 global a
 import os
 import aiohttp
@@ -36,8 +35,8 @@ async def torrent(_, message):
         return
     result = (
         f"Page - {i+1}\n\n"
-        f"🎬 Name : {a[i]['name']}\n"
-        f"🧲 Link : {a[i]['link']}\n\n\n"
+        f"🎬 Name : {a['results'][i]['name']}\n"
+        f"🧲 Link : {a['results'][i]['link']}\n\n\n"
     )
     await m.edit(
         result,
@@ -64,8 +63,8 @@ async def callback_query_next(_, message):
     i += 1
     result = (
         f"Page - {i+1}\n\n"
-        f"🎬 Name : {a[i]['name']}\n"
-        f"🧲 Link : {a[i]['link']}\n\n\n"
+        f"🎬 Name : {a['results'][i]['name']}\n"
+        f"🧲 Link : {a['results'][i]['link']}\n\n\n"
     )
     await m.edit(
         result,
@@ -95,8 +94,8 @@ async def callback_query_previous(_, message):
     i -= 1
     result = (
         f"Page - {i+1}\n\n"
-        f"🎬 Name: {a[i]['name']}\n"
-        f"🧲 Link: {a[i]['link']}\n\n\n"
+        f"🎬 Name: {a['results'][i]['name']}\n"
+        f"🧲 Link: {a['results'][i]['link']}\n\n\n"
     )
     await m.edit(
         result,
