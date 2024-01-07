@@ -29,7 +29,7 @@ async def find(_, message):
     m = await message.reply_text("Searching")
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://torrent-search-bot.vercel.app/api/{keyword}/{query}/10") \
+            async with session.get(f"https://torrent-search-bot.vercel.app/api/1337x/{query}")
                     as resp:
                 a = json.loads(await resp.text())
     except:
