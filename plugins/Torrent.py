@@ -12,7 +12,7 @@ a = None
 query = None
 
 
-@Client.on_message(filters.command(["find"]))
+@Client.on_message(filters.command(["torrent"]))
 async def find(_, message):
     global m
     global i
@@ -23,7 +23,7 @@ async def find(_, message):
     except:
         pass
     if len(message.command) < 2:
-        await message.reply_text("Usage: /find query")
+        await message.reply_text("Usage: /torrent query")
         return
     query = message.text.split(None, 1)[1].replace(" ", "%20")
     m = await message.reply_text("Searching")
