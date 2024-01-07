@@ -1,17 +1,19 @@
-global a
 import os
 import aiohttp
 import json
 from pyrogram import Client, filters, emoji
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+
+
 m = None
 i = 0
 a = None
 query = None
 
-@Client.on_message(filters.command(["torrent", "tor"]))
-async def torrent(_, message):
+
+@Client.on_message(filters.command(["find"]))
+async def find(_, message):
     global m
     global i
     global a
@@ -21,32 +23,38 @@ async def torrent(_, message):
     except:
         pass
     if len(message.command) < 2:
-        await message.reply_text("/torrent <Movie Name>")
+        await message.reply_text("Usage: /find query")
         return
     query = message.text.split(None, 1)[1].replace(" ", "%20")
-    m = await message.reply_text("Searching\nThis might take a while")
+    m = await message.reply_text("Searching")
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://torrent-api-py-n37l.onrender.com/api/v1/search?site=1337x&query=") \
+            async with session.get(f"https://torrents-api.ryukme.repl.co/api/{keyword}/{query}/10") \
                     as resp:
                 a = json.loads(await resp.text())
     except:
         await m.edit("Found Nothing.")
         return
     result = (
-        f"Page - {i+1}\n\n"
-        f"🎬 Name : {a['results'][i]['name']}\n"
-        f"🧲 Link : {a['results'][i]['link']}\n\n\n"
+        f"**Page - {i+1}**\n\n"
+        f"➲Name: {a[i]['Name']}\n"
+        f"➲{a[i]['Uploader']} on "
+        f"{a[i]['Date']}\n" 
+        f"➲Size: {a[i]['Size']}\n"
+        f"➲Leechers: {a[i]['Leechers']} || "
+        f"➲Seeders: {a[i]['Seeders']}\n"
+        f"➲Type: {a[i]['Category']}\n"
+        f"➲Magnet: `{a[i]['Magnet']}`\n\n\n"
     )
     await m.edit(
         result,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK} Close",
-                                         callback_data="close_data"),
-                    InlineKeyboardButton(f"Next ⏩",
-                                         callback_data="next_tor")
+                    InlineKeyboardButton(f"Next",
+                                         callback_data="next"),
+                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
+                                         callback_data="delete")
                 ]
             ]
         ),
@@ -54,7 +62,7 @@ async def torrent(_, message):
     )
 
 
-@Client.on_callback_query(filters.regex("next_tor"))
+@Client.on_callback_query(filters.regex("next"))
 async def callback_query_next(_, message):
     global i
     global m
@@ -62,21 +70,27 @@ async def callback_query_next(_, message):
     global query
     i += 1
     result = (
-        f"Page - {i+1}\n\n"
-        f"🎬 Name : {a['results'][i]['name']}\n"
-        f"🧲 Link : {a['results'][i]['link']}\n\n\n"
+        f"**Page - {i+1}**\n\n"
+        f"➲Name: {a[i]['Name']}\n"
+        f"➲{a[i]['Uploader']} on "
+        f"{a[i]['Date']}\n" 
+        f"➲Size: {a[i]['Size']}\n"
+        f"➲Leechers: {a[i]['Leechers']} || "
+        f"➲Seeders: {a[i]['Seeders']}\n"
+        f"➲Type: {a[i]['Category']}\n"
+        f"➲Magnet: `{a[i]['Magnet']}`\n\n\n"
     )
     await m.edit(
         result,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(f"⏪ Back",
-                                         callback_data="back_tor"),
+                    InlineKeyboardButton(f"Prev",
+                                         callback_data="previous"),
                     InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="close_data"),
-                    InlineKeyboardButton(f"Next ⏩",
-                                         callback_data="next_tor")
+                                         callback_data="delete"),
+                    InlineKeyboardButton(f"Next",
+                                         callback_data="next")
                     
                 ]
             ]
@@ -85,7 +99,7 @@ async def callback_query_next(_, message):
     )
 
 
-@Client.on_callback_query(filters.regex("back_tor"))
+@Client.on_callback_query(filters.regex("previous"))
 async def callback_query_previous(_, message):
     global i
     global m
@@ -93,23 +107,44 @@ async def callback_query_previous(_, message):
     global query
     i -= 1
     result = (
-        f"Page - {i+1}\n\n"
-        f"🎬 Name: {a['results'][i]['name']}\n"
-        f"🧲 Link: {a['results'][i]['link']}\n\n\n"
+        f"**Page - {i+1}**\n\n"
+        f"➲Name: {a[i]['Name']}\n"
+        f"➲{a[i]['Uploader']} on "
+        f"{a[i]['Date']}\n" 
+        f"➲Size: {a[i]['Size']}\n"
+        f"➲Leechers: {a[i]['Leechers']} || "
+        f"➲Seeders: {a[i]['Seeders']}\n"
+        f"➲Type: {a[i]['Category']}\n"
+        f"➲Magnet: `{a[i]['Magnet']}`\n\n\n"
     )
     await m.edit(
         result,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(f"⏪ Back",
-                                         callback_data="back_tor"),
+                    InlineKeyboardButton(f"Prev",
+                                         callback_data="previous"),
                     InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="close_data"),
-                    InlineKeyboardButton(f"Next ⏩",
-                                         callback_data="next_tor")
+                                         callback_data="delete"),
+                    InlineKeyboardButton(f"Next",
+                                         callback_data="next")
                 ]
             ]
         ),
         parse_mode="markdown",
     )
+
+
+@Client.on_callback_query(filters.regex("delete"))
+async def callback_query_delete(_, message):
+    global m
+    global i
+    global a
+    global query
+    await m.delete()
+    m = None
+    i = 0
+    a = None
+    query = None
+
+
