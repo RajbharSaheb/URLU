@@ -45,7 +45,7 @@ async def add_thumbnail(client, message):
     
     await add_user_to_database(client, message)
     
-    if Config.UPDATES_CHANNEL::
+    if Config.UPDATES_CHANNEL:
         fsub = await handle_force_subscribe(client, message)
         if fsub == 400:
             return
