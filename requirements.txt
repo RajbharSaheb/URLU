@@ -3,10 +3,10 @@ beautifulsoup4
 hachoir
 numpy
 Pillow
-Pyrogram==1.4.16
+pyrogram==2.0.35
 requests
 tgcrypto
-yt-dlp
+yt-dlp==2023.12.30
 olefile
 motor==2.5.1
 Shazamio
