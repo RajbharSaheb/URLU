@@ -35,19 +35,30 @@ from plugins.database.add import add_user_to_database
 from plugins.settings.settings import *
 
 
-@Client.on_message(filters.private & filters.photo & ~filters.edited)
-async def photo_handler(bot: Client, event: Message):
-    if not event.from_user:
-        return await event.reply_text("I don't know about you sar :(")
-    await add_user_to_database(bot, event)
-    if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(bot, event)
-      if fsub == 400:
-        return
-    editable = await event.reply_text("**👀 Processing...**")
-    await db.set_thumbnail(event.from_user.id, thumbnail=event.photo.file_id)
-    await editable.edit("**✅ ᴄᴜsᴛᴏᴍ ᴛʜᴜᴍʙɴᴀɪʟ sᴀᴠᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ!!**")
 
+@Client.on_message(filters.private & filters.command('setthumb'))
+async def add_thumbnail(client, message):
+    replied = message.reply_to_message
+    
+    if not message.from_user:
+        return await message.reply_text("What the hell is this...")
+    
+    await add_user_to_database(client, message)
+    
+    if UPDATES_CHANNEL:
+        fsub = await handle_force_subscribe(client, message)
+        if fsub == 400:
+            return
+    
+    editable = await message.reply_text("**👀 Processing...**")
+    
+    # Check if there is a replied message and it is a photo
+    if replied and replied.photo:
+        # Save the photo file_id as a thumbnail for the user
+        await db.set_lazy_thumbnail(message.from_user.id, thumbnail=replied.photo.file_id)
+        await editable.edit("**✅ Custom thumbnail set successfully!**")
+    else:
+        await editable.edit("**❌ Please reply to a photo to set it as a custom thumbnail.**")
 
 @Client.on_message(filters.private & filters.command(["delthumb", "deletethumbnail"]) & ~filters.edited)
 async def delete_thumb_handler(bot: Client, event: Message):
