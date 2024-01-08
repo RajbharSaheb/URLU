@@ -8,7 +8,7 @@ import os
 
 API = "https://apis.xditya.me/lyrics?song="
 
-@Client.on_message(filters.text & filters.command(["genius"]) 
+@Client.on_message(filters.text & filters.command(["genius"]) )
 async def sng(bot, message):  
           genius = Genius(GENIUS_API)        
           mee = await message.reply_text("`Searching`")
