@@ -60,7 +60,7 @@ async def add_thumbnail(client, message):
     else:
         await editable.edit("**❌ Please reply to a photo to set it as a custom thumbnail.**")
 
-@Client.on_message(filters.private & filters.command(["delthumb", "deletethumbnail"]) & ~filters.edited)
+@Client.on_message(filters.private & filters.command(["delthumb", "deletethumbnail"]) 
 async def delete_thumb_handler(bot: Client, event: Message):
     if not event.from_user:
         return await event.reply_text("I don't know about you sar :(")
