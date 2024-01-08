@@ -38,12 +38,12 @@ async def find(_, message):
     result = (
         f"**Page - {i+1}**\n\n"
         f"➲Name: {a[i]['Name']}\n"
-        f"➲{a[i]['Uploader']} on "
-        f"{a[i]['Date']}\n" 
+        f"➲{a[i]['UploadedBy']} on "
+        f"{a[i]['DateUploaded']}\n" 
         f"➲Size: {a[i]['Size']}\n"
         f"➲Leechers: {a[i]['Leechers']} || "
         f"➲Seeders: {a[i]['Seeders']}\n"
-        f"➲Type: {a[i]['Category']}\n"
+        f"➲Category: {a[i]['Category']}\n"
         f"➲Magnet: `{a[i]['Magnet']}`\n\n\n"
     )
     await m.edit(
@@ -72,12 +72,12 @@ async def callback_query_next(_, message):
     result = (
         f"**Page - {i+1}**\n\n"
         f"➲Name: {a[i]['Name']}\n"
-        f"➲{a[i]['Uploader']} on "
-        f"{a[i]['Date']}\n" 
+        f"➲{a[i]['UploadedBy']} on "
+        f"{a[i]['DateUploaded']}\n" 
         f"➲Size: {a[i]['Size']}\n"
         f"➲Leechers: {a[i]['Leechers']} || "
         f"➲Seeders: {a[i]['Seeders']}\n"
-        f"➲Type: {a[i]['Category']}\n"
+        f"➲Category: {a[i]['Category']}\n"
         f"➲Magnet: `{a[i]['Magnet']}`\n\n\n"
     )
     await m.edit(
@@ -109,12 +109,12 @@ async def callback_query_previous(_, message):
     result = (
         f"**Page - {i+1}**\n\n"
         f"➲Name: {a[i]['Name']}\n"
-        f"➲{a[i]['Uploader']} on "
-        f"{a[i]['Date']}\n" 
+        f"➲{a[i]['UploadedBy']} on "
+        f"{a[i]['DateUploaded']}\n" 
         f"➲Size: {a[i]['Size']}\n"
         f"➲Leechers: {a[i]['Leechers']} || "
         f"➲Seeders: {a[i]['Seeders']}\n"
-        f"➲Type: {a[i]['Category']}\n"
+        f"➲Category: {a[i]['Category']}\n"
         f"➲Magnet: `{a[i]['Magnet']}`\n\n\n"
     )
     await m.edit(
