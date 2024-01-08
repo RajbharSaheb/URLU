@@ -45,7 +45,7 @@ async def add_thumbnail(client, message):
     
     await add_user_to_database(client, message)
     
-    if UPDATES_CHANNEL:
+    if Config.UPDATES_CHANNEL::
         fsub = await handle_force_subscribe(client, message)
         if fsub == 400:
             return
@@ -55,7 +55,7 @@ async def add_thumbnail(client, message):
     # Check if there is a replied message and it is a photo
     if replied and replied.photo:
         # Save the photo file_id as a thumbnail for the user
-        await db.set_lazy_thumbnail(message.from_user.id, thumbnail=replied.photo.file_id)
+        await db.set_thumbnail(message.from_user.id, thumbnail=replied.photo.file_id)
         await editable.edit("**✅ Custom thumbnail set successfully!**")
     else:
         await editable.edit("**❌ Please reply to a photo to set it as a custom thumbnail.**")
