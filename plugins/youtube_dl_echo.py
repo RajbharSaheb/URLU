@@ -49,16 +49,15 @@ async def echo(bot, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
     await add_user_to_database(bot, update)
-    
     await bot.send_chat_action(
-        chat_id=update.effective_chat.id,
-        action="typing"
+       chat_id=update.chat.id,
+       action="typing"
     )
     if Config.UPDATES_CHANNEL:
-        fsub = await handle_force_subscribe(bot, update)
-        if fsub == 400:
-            return
-    logger.info(update.from_user.mention)
+      fsub = await handle_force_subscribe(bot, update)
+      if fsub == 400:
+        return
+    logger.info(update.from_user)
     url = update.text
     youtube_dl_username = None
     youtube_dl_password = None
@@ -285,6 +284,4 @@ async def echo(bot, update):
             reply_markup=reply_markup,
             parse_mode="html",
             reply_to_message_id=update.message_id
-        )
-
-
+                  )
