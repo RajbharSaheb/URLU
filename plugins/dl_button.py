@@ -61,13 +61,9 @@ async def ddl_call_back(bot, update):
                 o = entity.offset
                 l = entity.length
                 youtube_dl_url = youtube_dl_url[o:o + l]
-    description = custom_file_name
+    user = await bot.get_me()
     mention = user["mention"]
-    if f".{youtube_dl_ext}" not in custom_file_name:
     description = Translation.CUSTOM_CAPTION_UL_FILE.format(mention)
-        custom_file_name += f'.{youtube_dl_ext}'
-    logger.info(youtube_dl_url)
-    logger.info(custom_file_name)
     start = datetime.now()
     await bot.edit_message_text(
         text=Translation.DOWNLOAD_START,
