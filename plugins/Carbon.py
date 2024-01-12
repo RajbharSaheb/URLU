@@ -1,3 +1,4 @@
+
 from pyrogram import filters
 from aiohttp import ClientSession
 from pyrogram import Client as bot
@@ -6,14 +7,6 @@ from asyncio import gather
 from datetime import datetime, timedelta
 from io import BytesIO
 from math import atan2, cos, radians, sin, sqrt
-from os import execvp
-from random import randint
-from re import findall
-from re import sub as re_sub
-from sys import executable
-import aiofiles
-from PIL import Image
-from pyrogram.types import Message
 
 aiohttpsession = ClientSession()
 
@@ -29,20 +22,20 @@ async def make_carbon(code):
 async def carbon_func(_, message):
     if not message.reply_to_message:
         return await message.reply_text(
-            "ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴛᴇxᴛ ᴍᴇssᴀɢᴇ ᴛᴏ ᴍᴀᴋᴇ ᴄᴀʀʙᴏɴ."
+            "Reply to a text message to make carbon."
         )
     if not message.reply_to_message.text:
         return await message.reply_text(
-            "ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴛᴇxᴛ ᴍᴇssᴀɢᴇ ᴛᴏ ᴍᴀᴋᴇ ᴄᴀʀʙᴏɴ."
+            "Reply to a text message to make carbon."
         )
     user_id = message.from_user.id
-    m = await message.reply_text("ᴘʀᴏᴄᴇssɪɴɢ...")
+    m = await message.reply_text("Processing...")
     carbon = await make_carbon(message.reply_to_message.text)
-    await m.edit("ᴜᴘʟᴏᴀᴅɪɴɢ..")
+    await m.edit("Uploading..")
     await message.reply_photo(
         photo=carbon,
-        caption="**CᴏᴅᴇᴅᴇD Bʏ @urlx_bot**",
-        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("𝚂𝚄𝙿𝙿𝙾𝚁𝚃 𝚄𝚂", url="https://t.me/omg_info")]]),                   
+        caption="Coded By @shado_hackers",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("SUPPORT US", url="https://t.me/omg_info")]]),
     )
     await m.delete()
     carbon.close()
