@@ -12,10 +12,13 @@ aiohttpsession = ClientSession()
 
 async def make_carbon(code):
     url = "https://carbonara.vercel.app/api/cook"
-    async with aiohttpsession.post(url, json={"code": code}) as resp:
-        image = BytesIO(await resp.read())
+    try:
+        async with aiohttpsession.post(url, json={"code": code}) as resp:
+            image = BytesIO(await resp.read())
+    except Exception as e:
+        return False, str(e)
     image.name = "carbon.png"
-    return image
+    return True, image
 
 
 @bot.on_message(filters.command("carbon"))
@@ -30,12 +33,17 @@ async def carbon_func(_, message):
         )
     user_id = message.from_user.id
     m = await message.reply_text("Processing...")
-    carbon = await make_carbon(message.reply_to_message.text)
+    success, carbon = await make_carbon(message.reply_to_message.text)
+    if not success:
+        return await m.edit(f"Error: {carbon}")
     await m.edit("Uploading..")
-    await message.reply_photo(
-        photo=carbon,
-        caption="Coded By @shado_hackers",
-        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("SUPPORT US", url="https://t.me/omg_info")]]),
-    )
+    try:
+        await message.reply_photo(
+            photo=carbon,
+            caption="Coded By @Tamilan_BotsZ",
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("SUPPORT US", url="https://t.me/mkn_bots_updates")]]),
+        )
+    except pyrogram.errors.exceptions.bad_request_400.ImageProcessFailed:
+        return await m.edit("Telegram failed to process the image.")
     await m.delete()
     carbon.close()
