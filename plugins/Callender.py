@@ -1,6 +1,7 @@
+
 import calendar
-import time 
-import os 
+import time
+import os
 from pyrogram import Client, filters, emoji
 
 @Client.on_message(filters.command(["Calendar"]))
@@ -35,7 +36,7 @@ def print_calendar(year):
       print(day.strftime("%Y-%m-%d"), end=" ")
     print()
 
-if __name__ == "__main__":
+if __name__ == "main":
   # Get the year from the user.
   year = int(input("Enter a year: "))
 
