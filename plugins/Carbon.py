@@ -1,49 +1,37 @@
-
-from pyrogram import filters
+from pyrogram import Client, filters
+from pyrogram.types import *
 from aiohttp import ClientSession
-from pyrogram import Client as bot
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from asyncio import gather
-from datetime import datetime, timedelta
+from telegraph import upload_file
 from io import BytesIO
-from math import atan2, cos, radians, sin, sqrt
 
-aiohttpsession = ClientSession()
+ai_client = ClientSession()
 
-async def make_carbon(code):
-    url = "https://carbonara.vercel.app/api/cook"
-    try:
-        async with aiohttpsession.post(url, json={"code": code}) as resp:
-            image = BytesIO(await resp.read())
-    except Exception as e:
-        return False, str(e)
+async def make_carbon(code, tele=False):
+    url = "https://carbonara.solopov.dev/api/cook"
+    async with ai_client.post(url, json={"code": code}) as resp:
+        image = BytesIO(await resp.read())
     image.name = "carbon.png"
-    return True, image
+    if tele:
+        uf = upload_file(image)
+        image.close()
+        return f"https://graph.org{uf[0]}"
+    return image
 
 
-@bot.on_message(filters.command("carbon"))
-async def carbon_func(_, message):
+@Client.on_message(filters.command("carbon"))
+async def carbon_func(b, message):
     if not message.reply_to_message:
-        return await message.reply_text(
-            "Reply to a text message to make carbon."
-        )
+        return await message.reply_text("ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴛᴇxᴛ ᴍᴇssᴀɢᴇ ᴛᴏ ᴍᴀᴋᴇ ᴄᴀʀʙᴏɴ.")
     if not message.reply_to_message.text:
-        return await message.reply_text(
-            "Reply to a text message to make carbon."
-        )
+        return await message.reply_text("ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴛᴇxᴛ ᴍᴇssᴀɢᴇ ᴛᴏ ᴍᴀᴋᴇ ᴄᴀʀʙᴏɴ.")
     user_id = message.from_user.id
-    m = await message.reply_text("Processing...")
-    success, carbon = await make_carbon(message.reply_to_message.text)
-    if not success:
-        return await m.edit(f"Error: {carbon}")
-    await m.edit("Uploading..")
-    try:
-        await message.reply_photo(
-            photo=carbon,
-            caption="Coded By @Tamilan_BotsZ",
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("SUPPORT US", url="https://t.me/mkn_bots_updates")]]),
-        )
-    except pyrogram.errors.exceptions.bad_request_400.ImageProcessFailed:
-        return await m.edit("Telegram failed to process the image.")
+    m = await message.reply_text("ᴘʀᴏᴄᴇssɪɴɢ...")
+    carbon = await make_carbon(message.reply_to_message.text)
+    await m.edit("ᴜᴘʟᴏᴀᴅɪɴɢ..")
+    await message.reply_photo(
+        photo=carbon,
+        caption="**ᴍᴀᴅᴇ ʙʏ: @mkn_bots_updates**",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("ꜱᴜᴩᴩᴏʀᴛ ᴜꜱ", url="https://t.me/mkn_bots_updates")]]),                   
+    )
     await m.delete()
     carbon.close()
