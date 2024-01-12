@@ -7,7 +7,7 @@ from datetime import datetime
 async def calendar(client, message):
     try:
         today = datetime.today()
-        input_ = calendar.month(today.year, today.month)
+        input_ = calendar.month(today.year, today.month)  # Use calendar.month() function
         await message.reply_text(f"{input_}")
     except Exception as err:
         await message.reply_text("Exception Occured:- " + str(err))
