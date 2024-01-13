@@ -26,7 +26,8 @@ wget
 psutil
 bs4
 imdbpy
-telegraph==1.4.1
+googletrans==3.1.0a0
+telegraph==2.2.0
 pyshorteners
 ytthumb
 spotdl
@@ -35,3 +36,4 @@ spotipy
 lyricsgenius
 apscheduler
 mutagen
+gTTS==2.3.1
