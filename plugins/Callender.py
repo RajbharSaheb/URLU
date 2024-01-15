@@ -3,13 +3,13 @@ import pyrogram
 from pyrogram import filters, types
 from datetime import datetime, timedelta
 import calendar
-from pyrogram import Client as bot
+from pyrogram import Client 
 
 # Initialize the bot client
 #bot = pyrogram.Client("calendar_bot", api_id=123456, api_hash="0123456789abcdef")
 
 # Define a command handler for "/calendar"
-@bot.on_message(filters.command("calendar"))
+@Client.on_message(filters.command("calendar"))
 async def calendar_handler(client: pyrogram.Client, message: pyrogram.types.Message):
     # Get the current month and year
     now = datetime.now()
@@ -24,7 +24,7 @@ async def calendar_handler(client: pyrogram.Client, message: pyrogram.types.Mess
     await message.reply_text(calendar_text)
 
 # Define a command handler for "/next"
-@bot.on_message(filters.command("next"))
+@Client.on_message(filters.command("next"))
 async def next_handler(client: pyrogram.Client, message: pyrogram.types.Message):
     # Get the current month and year
     now = datetime.now()
@@ -45,7 +45,7 @@ async def next_handler(client: pyrogram.Client, message: pyrogram.types.Message)
     await message.reply_text(calendar_text)
 
 # Define a command handler for "/previous"
-@bot.on_message(filters.command("previous"))
+@Client.on_message(filters.command("previous"))
 async def previous_handler(client: pyrogram.Client, message: pyrogram.types.Message):
     # Get the current month and year
     now = datetime.now()
