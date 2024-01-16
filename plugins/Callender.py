@@ -41,7 +41,7 @@ def callback_handler(client, callback_query):
 # Function to generate the calendar markup
 def generate_calendar_markup(year, month):
     # Get calendar for the specified year and month
-    calendar = calendar.monthcalendar(year, month)
+    calendar = calendar.monthcalendar(year, month)  # Moved this line up
     
     # Create a list to store calendar buttons
     buttons = []
