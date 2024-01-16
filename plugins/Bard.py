@@ -9,8 +9,11 @@ import aiohttp
 @Client.on_message(filters.command("bard"))
 async def bard(client, message):
     # Extract the user's query from the message
-    query = message.text.split(" ", 1)[1]
-
+    
+query = None
+text_split = message.text.split(" ", 1)
+if len(text_split) > 1:
+    query = text_split[1]
     # Construct the Bard API request URL
     api_url = f"https://api.safone.dev/bard?{query}"
 
