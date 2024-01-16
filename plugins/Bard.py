@@ -1,30 +1,29 @@
-import asyncio
 import pyrogram
 
-from pyrogram import Client, filters
+# Initialize the Pyrogram Client
+#client = pyrogram.Client("my_session_name", api_id=1234567, api_hash="abcdefgh")
 
-# Create a Pyrogram client instance
-#client = Client("my_bard_client")
+# Start the client
+client.start()
 
 # Define the command handler
-@Client.on_message(filters.command("bard"))
-async def bard_command(client, message):
-    # Extract the user's query from the message
-    query = message.text.split(" ", 1)[1]
+@Client.on_message(pyrogram.filters.command("bard"))
+def bard_command(client, message):
+    # Extract the message text
+    message_text = message.text
 
-    # Send the query to the Bard API
-    async with client.session.get(f"https://api.safone.dev/bard?{query}") as response:
-        # Parse the API response
-        data = await response.json()
+    # Remove the command from the message text
+    query = message_text.replace("/bard", "").strip()
 
-        # Extract the Bard response from the API response
-        bard_response = data["response"]
+    # Send the query to the Bard AI API
+    response = requests.get("https://api.safone.dev/bard?{query}")
 
-    # Send the Bard response back to the user
-    await message.reply_text(bard_response)
+    # Parse the response
+    response_json = response.json()
+    output = response_json["response"]
 
-# Start the Pyrogram client
-#Client.start()
+    # Send the response to the user
+    message.reply_text(output)
 
 # Keep the client running
-#Client.idle()
+#client.idle()
