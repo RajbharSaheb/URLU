@@ -24,7 +24,7 @@ async def bard_command(client, message):
     await message.reply_text(bard_response)
 
 # Start the Pyrogram client
-Client.start()
+#Client.start()
 
 # Keep the client running
-Client.idle()
+#Client.idle()
