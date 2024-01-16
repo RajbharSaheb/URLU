@@ -1,5 +1,6 @@
 import pyrogram
 from pyrogram import Client, filters
+import aiohttp
 
 # Create a Pyrogram client instance
 #client = Client("my_bard_client")
