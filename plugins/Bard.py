@@ -17,8 +17,15 @@ if len(text_split) > 1:
     api_url = f"https://api.safone.dev/bard?{query}"
 
     # Send a GET request to the Bard API
+    
+async def get_data():
     async with aiohttp.ClientSession() as session:
         async with session.get(api_url) as response:
+            data = await response.json()
+            return data
+
+# Call the async function using the await keyword
+data = await get_data()
             # Check if the response is successful
             if response.status == 200:
                 # Parse the JSON response
