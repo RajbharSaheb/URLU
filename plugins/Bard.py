@@ -7,7 +7,7 @@ from pyrogram import Client, filters
 #client = Client("my_bard_client")
 
 # Define the command handler
-@client.on_message(filters.command("bard"))
+@Client.on_message(filters.command("bard"))
 async def bard_command(client, message):
     # Extract the user's query from the message
     query = message.text.split(" ", 1)[1]
@@ -24,7 +24,7 @@ async def bard_command(client, message):
     await message.reply_text(bard_response)
 
 # Start the Pyrogram client
-client.start()
+Client.start()
 
 # Keep the client running
-client.idle()
+Client.idle()
