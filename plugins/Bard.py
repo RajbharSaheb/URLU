@@ -1,5 +1,7 @@
 import pyrogram
 
+from pyrogram import filters, types
+from pyrogram import Client 
 # Initialize the Pyrogram Client
 #client = pyrogram.Client("my_session_name", api_id=1234567, api_hash="abcdefgh")
 
