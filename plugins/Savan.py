@@ -12,7 +12,7 @@ async def song(client, message):
         return ""
     pak = await message.reply('Downloading...')
     try:
-        r = requests.get(f"https://saavansongs.vercel.app/search/songs?query={args}&page=1&limit=10").json()
+        r = requests.get(f"https://savan.vercel.app/search/songs?query={args}&page=1&limit=10").json()
     except Exception as e:
         await pak.edit(str(e))
         return
