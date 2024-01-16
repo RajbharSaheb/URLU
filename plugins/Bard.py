@@ -4,7 +4,7 @@ import pyrogram
 #client = pyrogram.Client("my_session_name", api_id=1234567, api_hash="abcdefgh")
 
 # Start the client
-client.start()
+Client.start()
 
 # Define the command handler
 @Client.on_message(pyrogram.filters.command("bard"))
