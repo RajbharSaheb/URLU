@@ -1,31 +1,34 @@
 import pyrogram
+from pyrogram import Client, filters
 
-from pyrogram import filters, types
-from pyrogram import Client 
-# Initialize the Pyrogram Client
-#client = pyrogram.Client("my_session_name", api_id=1234567, api_hash="abcdefgh")
+# Create a Pyrogram client instance
+#client = Client("my_bard_client")
 
-# Start the client
-#Client.start()
+# Define the command handler for "/bard" command
+@Client.on_message(filters.command("bard"))
+async def bard(client, message):
+    # Extract the user's query from the message
+    query = message.text.split(" ", 1)[1]
 
-# Define the command handler
-@Client.on_message(pyrogram.filters.command("bard"))
-def bard_command(client, message):
-    # Extract the message text
-    message_text = message.text
+    # Construct the Bard API request URL
+    api_url = f"https://api.safone.dev/bard?{query}"
 
-    # Remove the command from the message text
-    query = message_text.replace("/bard", "").strip()
+    # Send a GET request to the Bard API
+    async with aiohttp.ClientSession() as session:
+        async with session.get(api_url) as response:
+            # Check if the response is successful
+            if response.status == 200:
+                # Parse the JSON response
+                data = await response.json()
 
-    # Send the query to the Bard AI API
-    response = requests.get("https://api.safone.dev/bard?{query}")
+                # Extract the Bard response from the JSON data
+                bard_response = data["response"]
 
-    # Parse the response
-    response_json = response.json()
-    output = response_json["response"]
+                # Send the Bard response back to the user
+                await message.reply_text(bard_response)
+            else:
+                # Handle the error
+                await message.reply_text("Sorry, something went wrong. Please try again.")
 
-    # Send the response to the user
-    message.reply_text(output)
-
-# Keep the client running
-#client.idle()
+# Start the Pyrogram client
+#client.run()
