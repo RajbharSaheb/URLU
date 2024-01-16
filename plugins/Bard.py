@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 import aiohttp
 
 # Create a Pyrogram client instance
-client = Client("my_bard_client")
+#client = Client("my_bard_client")
 
 # Define the command handler for "/bard" command
 @Client.on_message(filters.command("bard"))
@@ -39,4 +39,4 @@ async def bard(client, message):
         await message.reply_text("Sorry, something went wrong. Please try again.")
 
 # Start the Pyrogram client
-client.run()
+#client.run()
