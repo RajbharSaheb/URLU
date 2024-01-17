@@ -122,7 +122,7 @@ async def echo(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
-    chk = await client.send_message(
+    chk = await Client.send_message(
                 chat_id=message.chat.id,
                 text=f'<b>Analysing url.... </b>',
                 disable_web_page_preview=True,
