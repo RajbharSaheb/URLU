@@ -207,7 +207,7 @@ async def ddl_call_back(bot, update):
         await bot.edit_message_text(
             text=Translation.NO_VOID_FORMAT_FOUND.format("Incorrect Link"),
             chat_id=update.message.chat.id,
-            message_id=message_id
+            message_id=message_id,
             disable_web_page_preview=True
         )
 
