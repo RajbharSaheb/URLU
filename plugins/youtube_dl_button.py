@@ -15,7 +15,7 @@ import os
 import shutil
 import time
 from datetime import datetime
-
+from pyrogram import Client
 from plugins.config import Config
 from plugins.translation import Translation
 from plugins.custom_thumbnail import *
@@ -39,7 +39,7 @@ async def youtube_dl_call_back(bot, update):
         with open(save_ytdl_json_path, "r", encoding="utf8") as f:
             response_json = json.load(f)
     except (FileNotFoundError) as e:
-        await client.delete_messages(
+        await Client.delete_messages(
             chat_id=update.message.chat.id,
             message_ids=message.message_id,
             revoke=True
@@ -87,7 +87,7 @@ async def youtube_dl_call_back(bot, update):
                 o = entity.offset
                 l = entity.length
                 youtube_dl_url = youtube_dl_url[o:o + l]
-    await bot.edit_message_text(
+    await Client.edit_message_text(
         text=Translation.DOWNLOAD_START,
         chat_id=message.chat.id,
         message_id=message.message_id
@@ -155,7 +155,7 @@ async def youtube_dl_call_back(bot, update):
     ad_string_to_replace = "please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output."
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
-        await client.edit_message_text(
+        await Client.edit_message_text(
             chat_id=message.chat.id,
             message_id=message.message_id,
             text=error_message
@@ -195,7 +195,7 @@ async def youtube_dl_call_back(bot, update):
                 9
             )
             logger.info(images)'''
-            await client.edit_message_text(
+            await Client.edit_message_text(
                 text=Translation.UPLOAD_START,
                 chat_id=message.chat.id,
                 message_id=message.message_id
@@ -204,8 +204,8 @@ async def youtube_dl_call_back(bot, update):
             # ref: message from @Sources_codes
             start_time = time.time()
             if (await db.get_upload_as_doc(update.from_user.id)) is False:
-                thumbnail = await Gthumb01(bot, update)
-                await client.send_document(
+                thumbnail = await Gthumb01(Client, update)
+                await Client.send_document(
                     chat_id=update.message.chat.id,
                     document=download_directory,
                     thumb=thumbnail,
@@ -220,8 +220,8 @@ async def youtube_dl_call_back(bot, update):
                 )
             else:
                  width, height, duration = await Mdata01(download_directory)
-                 thumb_image_path = await Gthumb02(bot, update, duration, download_directory)
-                 await client.send_video(
+                 thumb_image_path = await Gthumb02(Client, update, duration, download_directory)
+                 await Client.send_video(
                     chat_id=update.message.chat.id,
                     video=download_directory,
                     caption=description,
@@ -240,8 +240,8 @@ async def youtube_dl_call_back(bot, update):
                 )
             if tg_send_type == "audio":
                 duration = await Mdata03(download_directory)
-                thumbnail = await Gthumb01(bot, update)
-                await client.send_audio(
+                thumbnail = await Gthumb01(Client, update)
+                await Client.send_audio(
                     chat_id=update.message.chat.id,
                     audio=download_directory,
                     caption=description,
@@ -258,8 +258,8 @@ async def youtube_dl_call_back(bot, update):
                 )
             elif tg_send_type == "vm":
                 width, duration = await Mdata02(download_directory)
-                thumbnail = await Gthumb02(bot, update, duration, download_directory)
-                await client.send_video_note(
+                thumbnail = await Gthumb02(Client, update, duration, download_directory)
+                await Client.send_video_note(
                     chat_id=update.message.chat.id,
                     video_note=download_directory,
                     duration=duration,
@@ -282,7 +282,7 @@ async def youtube_dl_call_back(bot, update):
                 os.remove(thumbnail)
             except:
                 pass
-            await client.edit_message_text(
+            await Client.edit_message_text(
                 text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
                 chat_id=update.message.chat.id,
                 message_id=update.message.message_id,
