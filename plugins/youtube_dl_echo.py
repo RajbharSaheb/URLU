@@ -122,12 +122,12 @@ async def echo(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
-    chk = await bot.send_message(
-            chat_id=update.chat.id,
-            text=f'<b>Processing... ⏳</b>',
-            disable_web_page_preview=True,
-            reply_to_message_id=message.id
-          )
+    chk = await client.send_message(
+                chat_id=message.chat.id,
+                text=f'<b>Analysing url.... </b>',
+                disable_web_page_preview=True,
+                reply_to_message_id=message.id
+            )
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
         # stdout must a pipe to be accessible as process.stdout
@@ -145,7 +145,7 @@ async def echo(bot, update):
             error_message += Translation.SET_CUSTOM_USERNAME_PASSWORD
         await chk.delete()
         time.sleep(3)
-        await bot.send_message(
+        await client.send_message(
             chat_id=update.chat.id,
             text=Translation.NO_VOID_FORMAT_FOUND.format(str(error_message)),
             reply_to_message_id=message.id,
@@ -253,7 +253,7 @@ async def echo(bot, update):
             ])
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await chk.delete()
-        await bot.send_message(
+        await client.send_message(
             chat_id=update.chat.id,
             text=Translation.FORMAT_SELECTION.format(Thumbnail) + "\n" + Translation.SET_CUSTOM_USERNAME_PASSWORD,
             reply_markup=reply_markup,
@@ -275,7 +275,7 @@ async def echo(bot, update):
         ])
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await chk.delete(True)
-        await bot.send_message(
+        await client.send_message(
             chat_id=update.chat.id,
             text=Translation.FORMAT_SELECTION,
             reply_markup=reply_markup,
