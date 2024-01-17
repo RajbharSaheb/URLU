@@ -26,7 +26,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, message, CallbackQuery, ForceReply
+#from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, message, CallbackQuery, ForceReply
 from functions.ran_text import random_char
 from plugins.database.add import add_user_to_database
 from pyrogram.types import Thumbnail
@@ -147,14 +147,14 @@ async def echo(bot, update):
             error_message += Translation.SET_CUSTOM_USERNAME_PASSWORD
         await chk.delete()
         time.sleep(3)
-        await Client.send_message(
-            chat_id=update.chat.id,
-            text=Translation.NO_VOID_FORMAT_FOUND.format(str(error_message)),
-            reply_to_message_id=message.id,
-            parse_mode="html",
-            disable_web_page_preview=True
-        )
-        return False
+        await client.send_message(
+                chat_id=message.chat.id,
+                text=script.NO_VOID_FORMAT_FOUND.format(str(error_message)),
+                reply_to_message_id=message.id,
+                parse_mode=enums.ParseMode.HTML,
+                disable_web_page_preview=True
+            )
+            return False   
     if t_response:
         # logger.info(t_response)
         x_reponse = t_response
@@ -259,7 +259,7 @@ async def echo(bot, update):
             chat_id=update.chat.id,
             text=Translation.FORMAT_SELECTION.format(Thumbnail) + "\n" + Translation.SET_CUSTOM_USERNAME_PASSWORD,
             reply_markup=reply_markup,
-            parse_mode="html",
+            parse_mode=enums.ParseMode.HTML,
             reply_to_message_id=message.id
         )
     else:
@@ -281,6 +281,6 @@ async def echo(bot, update):
             chat_id=update.chat.id,
             text=Translation.FORMAT_SELECTION,
             reply_markup=reply_markup,
-            parse_mode="html",
+            parse_mode=enums.ParseMode.HTML,
             reply_to_message_id=message.id
       )
