@@ -5,7 +5,7 @@ import requests
 import os
 
 
-API = "https://api.safone.dev/lyrics?song="
+API = "https://apis.xditya.me/lyrics?song="
 
 @Client.on_message(filters.text & filters.command(["lyrics"]) )
 async def sng(bot, message):          
