@@ -130,7 +130,7 @@ async def echo(bot, update):
                 reply_to_message_id=message.id
             )
    # Call the function and pass the message object
-  # send_analysis_message(message)
+   send_analysis_message(message)
    
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
