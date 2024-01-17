@@ -154,7 +154,8 @@ async def echo(bot, update):
                 parse_mode=enums.ParseMode.HTML,
                 disable_web_page_preview=True
             )
-            return False   
+            return False
+      
     if t_response:
         # logger.info(t_response)
         x_reponse = t_response
