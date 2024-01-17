@@ -39,7 +39,7 @@ async def youtube_dl_call_back(bot, update):
         with open(save_ytdl_json_path, "r", encoding="utf8") as f:
             response_json = json.load(f)
     except (FileNotFoundError) as e:
-        await bot.delete_messages(
+        await client.delete_messages(
             chat_id=update.message.chat.id,
             message_ids=message.message_id,
             revoke=True
@@ -155,7 +155,7 @@ async def youtube_dl_call_back(bot, update):
     ad_string_to_replace = "please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output."
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
-        await bot.edit_message_text(
+        await client.edit_message_text(
             chat_id=message.chat.id,
             message_id=message.message_id,
             text=error_message
@@ -179,7 +179,7 @@ async def youtube_dl_call_back(bot, update):
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
         if file_size > Config.TG_MAX_FILE_SIZE:
-            await bot.edit_message_text(
+            await client.edit_message_text(
                 chat_id=message.chat.id,
                 text=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size)),
                 message_id=message.message_id
@@ -195,7 +195,7 @@ async def youtube_dl_call_back(bot, update):
                 9
             )
             logger.info(images)'''
-            await bot.edit_message_text(
+            await client.edit_message_text(
                 text=Translation.UPLOAD_START,
                 chat_id=message.chat.id,
                 message_id=message.message_id
@@ -205,7 +205,7 @@ async def youtube_dl_call_back(bot, update):
             start_time = time.time()
             if (await db.get_upload_as_doc(update.from_user.id)) is False:
                 thumbnail = await Gthumb01(bot, update)
-                await bot.send_document(
+                await client.send_document(
                     chat_id=update.message.chat.id,
                     document=download_directory,
                     thumb=thumbnail,
@@ -221,7 +221,7 @@ async def youtube_dl_call_back(bot, update):
             else:
                  width, height, duration = await Mdata01(download_directory)
                  thumb_image_path = await Gthumb02(bot, update, duration, download_directory)
-                 await bot.send_video(
+                 await client.send_video(
                     chat_id=update.message.chat.id,
                     video=download_directory,
                     caption=description,
@@ -241,7 +241,7 @@ async def youtube_dl_call_back(bot, update):
             if tg_send_type == "audio":
                 duration = await Mdata03(download_directory)
                 thumbnail = await Gthumb01(bot, update)
-                await bot.send_audio(
+                await client.send_audio(
                     chat_id=update.message.chat.id,
                     audio=download_directory,
                     caption=description,
@@ -259,7 +259,7 @@ async def youtube_dl_call_back(bot, update):
             elif tg_send_type == "vm":
                 width, duration = await Mdata02(download_directory)
                 thumbnail = await Gthumb02(bot, update, duration, download_directory)
-                await bot.send_video_note(
+                await client.send_video_note(
                     chat_id=update.message.chat.id,
                     video_note=download_directory,
                     duration=duration,
@@ -282,7 +282,7 @@ async def youtube_dl_call_back(bot, update):
                 os.remove(thumbnail)
             except:
                 pass
-            await bot.edit_message_text(
+            await client.edit_message_text(
                 text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
                 chat_id=update.message.chat.id,
                 message_id=update.message.message_id,
