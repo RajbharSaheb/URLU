@@ -64,9 +64,9 @@ async def add_thumbnail(client, message):
 async def delete_thumb_handler(bot: Client, event: Message):
     if not event.from_user:
         return await event.reply_text("I don't know about you sar :(")
-    await add_user_to_database(bot, event)
+    await add_user_to_database(client, event)
     if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(bot, event)
+      fsub = await handle_force_subscribe(client, event)
       if fsub == 400:
         return
 
@@ -79,12 +79,12 @@ async def delete_thumb_handler(bot: Client, event: Message):
     )
 
 @Client.on_message(filters.private & filters.command("showthumb") )
-async def viewthumbnail(bot, update):
+async def viewthumbnail(client, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
-    await add_user_to_database(bot, update) 
+    await add_user_to_database(client, update) 
     if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(bot, update)
+      fsub = await handle_force_subscribe(client, update)
       if fsub == 400:
         return   
     thumbnail = await db.get_thumbnail(update.from_user.id)
@@ -101,11 +101,11 @@ async def viewthumbnail(bot, update):
         await update.reply_text(text=f"ɴᴏ ᴛʜᴜᴍʙɴᴀɪʟ ғᴏᴜɴᴅ 🤒")
 
 
-async def Gthumb01(bot, update):
+async def Gthumb01(client, update):
     thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
     db_thumbnail = await db.get_thumbnail(update.from_user.id)
     if db_thumbnail is not None:
-        thumbnail = await bot.download_media(message=db_thumbnail, file_name=thumb_image_path)
+        thumbnail = await client.download_media(message=db_thumbnail, file_name=thumb_image_path)
         Image.open(thumbnail).convert("RGB").save(thumbnail)
         img = Image.open(thumbnail)
         img.resize((100, 100))
@@ -115,7 +115,7 @@ async def Gthumb01(bot, update):
 
     return thumbnail
 
-async def Gthumb02(bot, update, duration, download_directory):
+async def Gthumb02(client, update, duration, download_directory):
     thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
     db_thumbnail = await db.get_thumbnail(update.from_user.id)
     if db_thumbnail is not None:
