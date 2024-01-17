@@ -41,7 +41,7 @@ async def youtube_dl_call_back(bot, update):
     except (FileNotFoundError) as e:
         await bot.delete_messages(
             chat_id=update.message.chat.id,
-            message_ids=update.message.message_id,
+            message_ids=message.message_id,
             revoke=True
         )
         return False
@@ -89,8 +89,8 @@ async def youtube_dl_call_back(bot, update):
                 youtube_dl_url = youtube_dl_url[o:o + l]
     await bot.edit_message_text(
         text=Translation.DOWNLOAD_START,
-        chat_id=update.message.chat.id,
-        message_id=update.message.message_id
+        chat_id=message.chat.id,
+        message_id=message.message_id
     )
     description = Translation.CUSTOM_CAPTION_UL_FILE
     if "fulltitle" in response_json:
@@ -156,8 +156,8 @@ async def youtube_dl_call_back(bot, update):
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
         await bot.edit_message_text(
-            chat_id=update.message.chat.id,
-            message_id=update.message.message_id,
+            chat_id=message.chat.id,
+            message_id=message.message_id,
             text=error_message
         )
         return False
@@ -180,9 +180,9 @@ async def youtube_dl_call_back(bot, update):
             file_size = os.stat(download_directory).st_size
         if file_size > Config.TG_MAX_FILE_SIZE:
             await bot.edit_message_text(
-                chat_id=update.message.chat.id,
+                chat_id=message.chat.id,
                 text=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size)),
-                message_id=update.message.message_id
+                message_id=message.message_id
             )
         else:
             is_w_f = False
@@ -197,8 +197,8 @@ async def youtube_dl_call_back(bot, update):
             logger.info(images)'''
             await bot.edit_message_text(
                 text=Translation.UPLOAD_START,
-                chat_id=update.message.chat.id,
-                message_id=update.message.message_id
+                chat_id=message.chat.id,
+                message_id=message.message_id
             )
 
             # ref: message from @Sources_codes
@@ -265,7 +265,7 @@ async def youtube_dl_call_back(bot, update):
                     duration=duration,
                     length=width,
                     thumb=thumbnail,
-                    reply_to_message_id=update.message.reply_to_message.message_id,
+                    reply_to_message_id=query.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
