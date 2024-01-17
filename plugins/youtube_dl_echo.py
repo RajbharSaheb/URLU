@@ -24,7 +24,7 @@ from PIL import Image
 from functions.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, massage 
 from pyrogram.errors import UserNotParticipant
 from functions.ran_text import random_char
 from plugins.database.add import add_user_to_database
@@ -50,11 +50,11 @@ async def echo(bot, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
     await add_user_to_database(Client, update)
-    
-    if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(Client, update)
-      if fsub == 400:
-        return
+   
+if Config.UPDATES_CHANNEL:
+		fsub = await handle_force_subscribe(Client, cmd)
+		if fsub == 400:
+			return
     logger.info(update.from_user)
     url = update.text
     youtube_dl_username = None
