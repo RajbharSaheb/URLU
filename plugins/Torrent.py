@@ -29,7 +29,7 @@ async def find(_, message):
     m = await message.reply_text("Searching")
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://torrent-search-bot.vercel.app/api/1337x/{query}") \
+            async with session.get(f"https://torrent-api-py-nx0x.onrender.com/api/v1/search?site=1337x&query=") \
                     as resp:
                 a = json.loads(await resp.text())
     except:
@@ -37,9 +37,9 @@ async def find(_, message):
         return
     result = (
         f"**Page - {i+1}**\n\n"
-        f"➲Name: {a[i]['Name']}\n"
-        f"➲{a[i]['UploadedBy']} on "
-        f"{a[i]['DateUploaded']}\n" 
+        f"➲name: {a[i]['name']}\n"
+        f"➲{a[i]['uploader']} on "
+        f"{a[i]['date']}\n" 
         f"➲Size: {a[i]['Size']}\n"
         f"➲Leechers: {a[i]['Leechers']} || "
         f"➲Seeders: {a[i]['Seeders']}\n"
