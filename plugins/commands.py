@@ -29,7 +29,7 @@ async def start(bot, update):
     )
     
     if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(client, update)
+      fsub = await handle_force_subscribe(Client, update)
       if fsub == 400:
         return
     await update.reply_text(
