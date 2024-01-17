@@ -51,10 +51,10 @@ async def echo(bot, update):
         return await update.reply_text("I don't know about you sar :(")
     await add_user_to_database(Client, update)
    
-if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(Client, update)
-      if fsub == 400:
-        return
+#if Config.UPDATES_CHANNEL:
+    #  fsub = await handle_force_subscribe(Client, update)
+   #   if fsub == 400:
+     #   return
     logger.info(update.from_user)
     url = update.text
     youtube_dl_username = None
