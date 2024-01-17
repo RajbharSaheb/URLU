@@ -147,15 +147,14 @@ async def echo(bot, update):
             error_message += Translation.SET_CUSTOM_USERNAME_PASSWORD
         await chk.delete()
         time.sleep(3)
-        await client.send_message(
-                chat_id=message.chat.id,
-                text=script.NO_VOID_FORMAT_FOUND.format(str(error_message)),
-                reply_to_message_id=message.id,
-                parse_mode=enums.ParseMode.HTML,
-                disable_web_page_preview=True
-            )
-            return False
-      
+        await Client.send_message(
+            chat_id=update.chat.id,
+            text=Translation.NO_VOID_FORMAT_FOUND.format(str(error_message)),
+            reply_to_message_id=update.message_id,
+            parse_mode=enums.ParseMode.HTML,
+            disable_web_page_preview=True
+        )
+        return False
     if t_response:
         # logger.info(t_response)
         x_reponse = t_response
