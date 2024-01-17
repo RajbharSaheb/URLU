@@ -71,9 +71,9 @@ async def callback_query_next(_, message):
     i += 1
     result = (
         f"**Page - {i+1}**\n\n"
-        f"➲Name: {a[i]['Name']}\n"
-        f"➲{a[i]['UploadedBy']} on "
-        f"{a[i]['DateUploaded']}\n" 
+        f"➲name: {a[i]['name']}\n"
+        f"➲{a[i]['uploader']} on "
+        f"{a[i]['date']}\n" 
         f"➲Size: {a[i]['Size']}\n"
         f"➲Leechers: {a[i]['Leechers']} || "
         f"➲Seeders: {a[i]['Seeders']}\n"
@@ -108,9 +108,9 @@ async def callback_query_previous(_, message):
     i -= 1
     result = (
         f"**Page - {i+1}**\n\n"
-        f"➲Name: {a[i]['Name']}\n"
-        f"➲{a[i]['UploadedBy']} on "
-        f"{a[i]['DateUploaded']}\n" 
+        f"➲name: {a[i]['name']}\n"
+        f"➲{a[i]['uploader']} on "
+        f"{a[i]['date']}\n" 
         f"➲Size: {a[i]['Size']}\n"
         f"➲Leechers: {a[i]['Leechers']} || "
         f"➲Seeders: {a[i]['Seeders']}\n"
