@@ -26,7 +26,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
-#from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, message, CallbackQuery, ForceReply
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, CallbackQuery, ForceReply
 from functions.ran_text import random_char
 from plugins.database.add import add_user_to_database
 from pyrogram.types import Thumbnail
@@ -125,11 +125,11 @@ async def echo(bot, update):
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
     chk = await Client.send_message(
-                chat_id=message.chat.id,
+                chat_id=Message.chat.id,
                 text=f'<b>Analysing url.... </b>',
                 disable_web_page_preview=True,
                 reply_to_message_id=message.id
-            )
+    )
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
         # stdout must a pipe to be accessible as process.stdout
