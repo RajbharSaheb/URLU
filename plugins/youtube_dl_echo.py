@@ -15,6 +15,7 @@ from plugins.translation import Translation
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 from pyrogram import filters
 from pyrogram import Client
+from pyrogram import enums
 from functions.forcesub import handle_force_subscribe
 from functions.display_progress import humanbytes
 from functions.help_uploadbot import DownLoadFile
@@ -33,12 +34,12 @@ from pyrogram.types import Thumbnail
 async def echo(bot, update):
     if Config.LOG_CHANNEL:
         try:
-            log_message = await update.forward(Config.LOG_CHANNEL)
+            log_message = await message.forward(Config.LOG_CHANNEL)
             log_info = "Message Sender Information\n"
-            log_info += "\nFirst Name: " + update.from_user.first_name
-            log_info += "\nUser ID: " + str(update.from_user.id)
-            log_info += "\nUsername: @" + update.from_user.username if update.from_user.username else ""
-            log_info += "\nUser Link: " + update.from_user.mention
+            log_info += "\nFirst Name: " + message.from_user.first_name
+            log_info += "\nUser ID: " + str(message.from_user.id)
+            log_info += "\nUsername: @" + message.from_user.username if message.from_user.username else ""
+            log_info += "\nUser Link: " + message.from_user.mention
             await log_message.reply_text(
                 text=log_info,
                 disable_web_page_preview=True,
@@ -48,10 +49,10 @@ async def echo(bot, update):
             print(error)
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
-    await add_user_to_database(bot, update)
+    await add_user_to_database(Client, update)
     
     if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(bot, update)
+      fsub = await handle_force_subscribe(Client, update)
       if fsub == 400:
         return
     logger.info(update.from_user)
