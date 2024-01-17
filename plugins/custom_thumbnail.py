@@ -45,10 +45,10 @@ async def add_thumbnail(Client, message):
     
     await add_user_to_database(Client, message)
     
-    if Config.UPDATES_CHANNEL:
-        fsub = await handle_force_subscribe(Client, message)
-        if fsub == 400:
-            return
+    #if Config.UPDATES_CHANNEL:
+       # fsub = await handle_force_subscribe(Client, message)
+      #  if fsub == 400:
+       #     return
     
     editable = await message.reply_text("**👀 Processing...**")
     
@@ -65,10 +65,10 @@ async def delete_thumb_handler(bot: Client, event: Message):
     if not event.from_user:
         return await event.reply_text("I don't know about you sar :(")
     await add_user_to_database(Client, event)
-    if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(Client, event)
-      if fsub == 400:
-        return
+   # if Config.UPDATES_CHANNEL:
+ #     fsub = await handle_force_subscribe(Client, event)
+  #    if fsub == 400:
+  #     return
 
     await db.set_thumbnail(event.from_user.id, thumbnail=None)
     await event.reply_text(
@@ -83,10 +83,10 @@ async def viewthumbnail(Client, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
     await add_user_to_database(Client, update) 
-    if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(client, update)
-      if fsub == 400:
-        return   
+  #  if Config.UPDATES_CHANNEL:
+   #   fsub = await handle_force_subscribe(client, update)
+  #    if fsub == 400:
+ #       return   
     thumbnail = await db.get_thumbnail(update.from_user.id)
     if thumbnail is not None:
         await bot.send_photo(
