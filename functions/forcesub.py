@@ -6,7 +6,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
 async def handle_force_subscribe(Client, message):
     try:
-        invite_link = await Client.create_chat_invite_link(int(Config.UPDATES_CHANNEL))
+        invite_link = await Client.create_chat_invite_link(int(Config.UPDATES_CHANNEL), message.chat.id)
     except FloodWait as e:
         await asyncio.sleep(e.x)
         return 400
@@ -24,7 +24,7 @@ async def handle_force_subscribe(Client, message):
     except UserNotParticipant:
         await Client.send_message(
             chat_id=message.from_user.id,
-            text="**Please Join My Update Channel To Use Me**",
+            text="Please Join My Update Channel To Use Me",
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
@@ -45,5 +45,3 @@ async def handle_force_subscribe(Client, message):
            reply_to_message_id=message.id,
         )
         return 400
-
-
