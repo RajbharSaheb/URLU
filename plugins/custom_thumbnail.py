@@ -14,7 +14,7 @@ import time
 
 # the Strings used for this "thing"
 from plugins.translation import Translation
-from pyrogram import Client
+from pyrogram import Client 
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -37,16 +37,16 @@ from plugins.settings.settings import *
 
 
 @Client.on_message(filters.private & filters.command('setthumb'))
-async def add_thumbnail(client, message):
+async def add_thumbnail(Client, message):
     replied = message.reply_to_message
     
     if not message.from_user:
         return await message.reply_text("What the hell is this...")
     
-    await add_user_to_database(client, message)
+    await add_user_to_database(Client, message)
     
     if Config.UPDATES_CHANNEL:
-        fsub = await handle_force_subscribe(client, message)
+        fsub = await handle_force_subscribe(Client, message)
         if fsub == 400:
             return
     
@@ -64,9 +64,9 @@ async def add_thumbnail(client, message):
 async def delete_thumb_handler(bot: Client, event: Message):
     if not event.from_user:
         return await event.reply_text("I don't know about you sar :(")
-    await add_user_to_database(client, event)
+    await add_user_to_database(Client, event)
     if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(client, event)
+      fsub = await handle_force_subscribe(Client, event)
       if fsub == 400:
         return
 
@@ -79,10 +79,10 @@ async def delete_thumb_handler(bot: Client, event: Message):
     )
 
 @Client.on_message(filters.private & filters.command("showthumb") )
-async def viewthumbnail(client, update):
+async def viewthumbnail(Client, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
-    await add_user_to_database(client, update) 
+    await add_user_to_database(Client, update) 
     if Config.UPDATES_CHANNEL:
       fsub = await handle_force_subscribe(client, update)
       if fsub == 400:
@@ -101,11 +101,11 @@ async def viewthumbnail(client, update):
         await update.reply_text(text=f"ɴᴏ ᴛʜᴜᴍʙɴᴀɪʟ ғᴏᴜɴᴅ 🤒")
 
 
-async def Gthumb01(client, update):
+async def Gthumb01(Client, update):
     thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
     db_thumbnail = await db.get_thumbnail(update.from_user.id)
     if db_thumbnail is not None:
-        thumbnail = await client.download_media(message=db_thumbnail, file_name=thumb_image_path)
+        thumbnail = await Client.download_media(message=db_thumbnail, file_name=thumb_image_path)
         Image.open(thumbnail).convert("RGB").save(thumbnail)
         img = Image.open(thumbnail)
         img.resize((100, 100))
@@ -115,7 +115,7 @@ async def Gthumb01(client, update):
 
     return thumbnail
 
-async def Gthumb02(client, update, duration, download_directory):
+async def Gthumb02(Client, update, duration, download_directory):
     thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
     db_thumbnail = await db.get_thumbnail(update.from_user.id)
     if db_thumbnail is not None:
