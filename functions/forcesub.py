@@ -1,47 +1,50 @@
 import asyncio
 from plugins.config import Config
+
 from pyrogram import Client
 from pyrogram.errors import FloodWait, UserNotParticipant
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-async def handle_force_subscribe(Client, message):
+from pyrogram.types import ChatPermissions, InlineKeyboardMarkup, InlineKeyboardButton, Message
+
+async def handle_force_subscribe(Client, cmd):
     try:
-        invite_link = await Client.create_chat_invite_link(int(Config.UPDATES_CHANNEL), message.chat.id)
-    except FloodWait as e:
-        await asyncio.sleep(e.x)
-        return 400
-    try:
-        user = await Client.get_chat_member(int(Config.UPDATES_CHANNEL), message.from_user.id)
+        user = await Client.get_chat_member(int(Config.UPDATES_CHANNEL), cmd.from_user.id)
         if user.status == "kicked":
-            await bot.send_message(
-                chat_id=message.from_user.id,
-                text="Sorry Sir, You are Banned. Contact My [Support Group](https://t.me/shado_hackers).",
+            await Client.send_message(
+                chat_id=cmd.from_user.id,
+                text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/linux_repo).",
                 parse_mode="markdown",
-                disable_web_page_preview=True,
-                reply_to_message_id=message.id,
+                disable_web_page_preview=True
             )
             return 400
     except UserNotParticipant:
-        await Client.send_message(
-            chat_id=message.from_user.id,
-            text="Please Join My Update Channel To Use Me",
+        try:
+            invite_link = await Client.create_chat_invite_link(int(Config.UPDATES_CHANNEL))
+        except FloodWait as e:
+            await asyncio.sleep(e.x)
+            return 400
+        await bot.send_message(
+            chat_id=cmd.from_user.id,
+            text="**Please Join My Updates Channel to use this Bot!**\n\nDue to Overload, Only Channel Subscribers can use the Bot!",
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("✴️ Join My Update Channel ✴️", url=invite_link.invite_link)
+                        InlineKeyboardButton("🤖 Join Updates Channel", url=invite_link.invite_link)
+                    ],
+                    [
+                        InlineKeyboardButton("🔄 Refresh 🔄", callback_data="refreshmeh")
                     ]
                 ]
             ),
-            parse_mode="markdown",
-            reply_to_message_id=message.id,
+            parse_mode="markdown"
         )
         return 400
     except Exception:
         await Client.send_message(
-            chat_id=message.from_user.id,
-            text="Something Went Wrong. Contact My [Support Group](https://t.me/shado_hackers).",
+            chat_id=cmd.from_user.id,
+            text="Something went Wrong. Contact my [Support Group](https://t.me/linux_repo).",
             parse_mode="markdown",
-            disable_web_page_preview=True,
-           reply_to_message_id=message.id,
+            disable_web_page_preview=True
         )
         return 400
