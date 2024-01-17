@@ -4,7 +4,7 @@ from pyrogram import Client
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-async def handle_force_subscribe(bot, message):
+async def handle_force_subscribe(Client, message):
     try:
         invite_link = await Client.create_chat_invite_link(int(Config.UPDATES_CHANNEL))
     except FloodWait as e:
