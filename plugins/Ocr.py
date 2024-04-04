@@ -12,13 +12,13 @@ from pyrogram import filters
 from pyrogram.types import Message
 from telegraph.aio import Telegraph
 
-from misskaty import app
-from misskaty.core.decorator.errors import capture_err
-from misskaty.helper import fetch, use_chat_lang
-from misskaty.vars import COMMAND_HANDLER
+from pyrogram import Client as app
+from functions.error import capture_err
+from functions.https import fetch
+from functions.https import rentry
 
 
-@app.on_message(filters.command(["ocr"], ))
+@app.on_message(filters.command(["ocr"]))
 @capture_err
 async def ocr(_, ctx: Message, strings):
     reply = ctx.reply_to_message
