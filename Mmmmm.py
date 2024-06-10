@@ -16,8 +16,6 @@ HELP_BUTTONS =InlineKeyboardMarkup(
 
 
 async def fetch_proxies(proxy_type):
-    em = Emojik()
-    em.initialize()
     url = f"https://www.proxy-list.download/api/v1/get?type={proxy_type}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -40,7 +38,7 @@ async def send_proxy(c: nlx, chat_id, proxy_type, proxies):
     em = Emojik()
     em.initialize()
     if proxies:
-        teks = ("Nothing found froxy").format(em.sukses, proxy_type)
+        teks = ("Nothing found froxy").format(proxy_type)
         teks += "\n".join(proxies)
         await c.send_message(chat_id, teks)
     else:
@@ -49,8 +47,6 @@ async def send_proxy(c: nlx, chat_id, proxy_type, proxies):
 
 @ky.ubot("getproxy", sudo=True)
 async def get_proxy_command(c: nlx, m):
-    em = Emojik()
-    em.initialize()
     try:
         pros = await m.reply(("Being Processed").format(em.proses))
         command = m.text.split()[1].lower()
